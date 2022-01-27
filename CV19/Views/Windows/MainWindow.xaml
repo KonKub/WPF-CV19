@@ -12,11 +12,12 @@
         <vm:MainWindowViewModel/>
     </Window.DataContext>
     
-    <Grid>
-        <TextBox x:Name="textBox" HorizontalAlignment="Left" Margin="153,151,0,0" 
-                 Text="{Binding Title, UpdateSourceTrigger=PropertyChanged}" 
-                 TextWrapping="Wrap" VerticalAlignment="Top" Width="120" >
-        </TextBox>
-
-    </Grid>
+    <DockPanel>
+        <Menu></Menu>
+        <StatusBar></StatusBar>
+        <TabControl>
+            <TabItem></TabItem>
+            <TabItem></TabItem>
+        </TabControl>
+    </DockPanel>
 </Window>
