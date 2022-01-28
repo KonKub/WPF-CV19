@@ -1,4 +1,5 @@
 ﻿using CV19.Infrastructure.Commands;
+using CV19.Models;
 using CV19.ViewModels.Base;
 using System;
 using System.Collections.Generic;
@@ -15,7 +16,26 @@ namespace CV19.ViewModels
             #region Команды
             CloseApplicationCommand = new LambdaCommand(OnCloseApplicationCommandExecuted, CanCloseApplicationCommandExecute);
             #endregion
+
+            var dp = new List<DataPoint>((int)(360/0.1));
+            for (var x = 0d; x <= 360; x = x + 0.1)
+            {
+                var y = Math.Sin(x * Math.PI / 180);
+                dp.Add(new DataPoint { XValue = x, YValue = y });
+            }
+            TestDataPoints = dp;
         }
+
+        #region IEnumerable<DataPoint> TestDataPoints Тестовые данные для построения графика
+        /// <summary> Тестовые данные для построения графика </summary>
+        private IEnumerable<DataPoint> _TestDataPoints;
+
+        public IEnumerable<DataPoint> TestDataPoints
+        {
+            get => _TestDataPoints;
+            set => Set(ref _TestDataPoints, value);
+        }
+        #endregion
 
         #region string _title заголовок окна
         /// <summary> заголовок окна </summary>
