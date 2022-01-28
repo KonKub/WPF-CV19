@@ -29,7 +29,7 @@ namespace CV19Console
             {
                 var line = data_reader.ReadLine();
                 if (string.IsNullOrEmpty(line)) continue;
-                yield return line;
+                yield return line.Replace("Korea,", "Korea");
             }
         }
 
@@ -39,6 +39,22 @@ namespace CV19Console
             .Skip(4)
             .Select(s => DateTime.Parse(s, CultureInfo.InvariantCulture))
             .ToArray();
+
+        private static IEnumerable<(string Country, string Province, int[] Count)> GetData()
+        {
+            var lines = GetDataLines().Skip(1).Select(line=>line.Split(','));
+
+            foreach(var row in lines)
+            {
+                var province = row[0].Trim();
+                var country = row[1].Trim(' ','"');
+                var count = row.Skip(5).Select(int.Parse).ToArray();
+                //строки var count = row.Skip(4).ToArray();
+
+                yield return (country, province, count);
+            }
+        }
+
 
         static void Main(string[] args)
         {
@@ -52,8 +68,12 @@ namespace CV19Console
             //foreach(var dl in GetDataLines())
             //    Console.WriteLine(dl);
 
-            var dates = GetDates();
-            Console.WriteLine(string.Join("\r\n", dates));
+            //var dates = GetDates();
+            //Console.WriteLine(string.Join("\r\n", dates));
+
+            var RusData = GetData().First(v=>v.Country.Equals("Russia", StringComparison.OrdinalIgnoreCase));
+            Console.WriteLine(string.Join("\r\n",GetDates().Zip(RusData.Count, (date, count)=>$"{date:dd:MM:yyyy} - {count}")));
+
 
             Console.ReadLine();
         }
