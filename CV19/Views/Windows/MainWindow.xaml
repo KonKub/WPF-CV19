@@ -3,6 +3,7 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"  mc:Ignorable="d"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:fa="http://schemas.fontawesome.com/icons/"
         xmlns:l="clr-namespace:CV19"
         xmlns:vm="clr-namespace:CV19.ViewModels"
         xmlns:cmd="clr-namespace:CV19.Infrastructure.Commands.Base"
@@ -42,7 +43,14 @@
             </StatusBarItem>
         </StatusBar>
         <TabControl>
-            <TabItem Header="Вкладка 1">
+            <TabItem>
+                <TabItem.Header>
+                    <StackPanel Orientation="Horizontal">
+                        <!--<Image Source=""/>-->
+                        <fa:ImageAwesome Icon="Regular_Smile" Height="13" Margin="2,0,5,0"/>
+                        <TextBlock Text="Вкладка 1"/>
+                    </StackPanel>
+                </TabItem.Header>
                 <Grid Height="355">
                     <Grid.RowDefinitions>
                         <RowDefinition Height="63"/>
@@ -61,7 +69,16 @@
                     <GridSplitter Grid.Column="0" Grid.Row="0" Grid.RowSpan="2" HorizontalAlignment="Right" Width="4"/>
                 </Grid>
             </TabItem>
-            <TabItem Header="Вкладка 2"></TabItem>
+            <TabItem Background="Bisque">
+                <TabItem.Header>
+                    <StackPanel Orientation="Horizontal">
+                        <!--<Image Source=""/>-->
+                        <fa:ImageAwesome Icon="Solid_CaretLeft" Height="13" Margin="2,0,5,0" Foreground="Red"/>
+                        <TextBlock Text="Вкладка 2"/>
+                    </StackPanel>
+                </TabItem.Header>
+
+            </TabItem>
         </TabControl>
     </DockPanel>
 </Window>
