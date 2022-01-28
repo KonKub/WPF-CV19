@@ -9,19 +9,25 @@
         
         Title="{Binding Path=Title}" 
         Height="233" Width="652">
+    <Window.InputBindings>
+        <KeyBinding Modifiers="Ctrl" Key="Q" Command="{Binding CloseApplicationCommand}"/>
+    </Window.InputBindings>
     <Window.DataContext>
         <vm:MainWindowViewModel/>
     </Window.DataContext>
-    
+    <Window.Resources>
+        <cmd:CloseApplicationCommand x:Key="CloseApplicationCommand"/>
+    </Window.Resources>
     <DockPanel>
         <Menu DockPanel.Dock="Top">
             <MenuItem Header="Файл">
                 <!--<MenuItem Header="Выход" Command="{Binding CloseApplicationCommand}"></MenuItem>-->
-                <MenuItem Header="Выход">
+                <MenuItem Header="Выход" Command="{StaticResource CloseApplicationCommand}"></MenuItem>
+                <!--<MenuItem Header="Выход">
                     <MenuItem.Command>
                         <cmd:CloseApplicationCommand/>
                     </MenuItem.Command>
-                </MenuItem>
+                </MenuItem>-->
             </MenuItem>
             <MenuItem Header="Помощь">
                 <MenuItem Header="О программе"></MenuItem>
@@ -47,7 +53,11 @@
                         <ColumnDefinition Width="543*"/>
                     </Grid.ColumnDefinitions>
                     <Rectangle Grid.Row="0" Grid.Column="0" Margin="5,3" Fill="Blue" Stroke="Red" StrokeThickness="3" RadiusX="1000" RadiusY="5"/>
-                    <Ellipse Grid.Row="0" Grid.Column="1" Margin="5,3" Fill="Gray" Stroke="LightYellow" StrokeThickness="3"/>
+                    <Ellipse Grid.Row="0" Grid.Column="1" Margin="5,3" Fill="Gray" Stroke="LightYellow" StrokeThickness="3">
+                        <Ellipse.InputBindings>
+                            <MouseBinding Command="{Binding CloseApplicationCommand}" MouseAction="LeftDoubleClick"/>
+                        </Ellipse.InputBindings>
+                    </Ellipse>
                     <GridSplitter Grid.Column="0" Grid.Row="0" Grid.RowSpan="2" HorizontalAlignment="Right" Width="4"/>
                 </Grid>
             </TabItem>
