@@ -4,6 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:fa="http://schemas.fontawesome.com/icons/"
+        xmlns:oxy="http://oxyplot.org/wpf"
         xmlns:l="clr-namespace:CV19"
         xmlns:vm="clr-namespace:CV19.ViewModels"
         xmlns:cmd="clr-namespace:CV19.Infrastructure.Commands.Base"
@@ -58,15 +59,16 @@
                     </Grid.RowDefinitions>
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="66"/>
-                        <ColumnDefinition Width="543*"/>
+                        <ColumnDefinition Width="49*"/>
+                        <ColumnDefinition Width="531*"/>
                     </Grid.ColumnDefinitions>
-                    <Rectangle Grid.Row="0" Grid.Column="0" Margin="5,3" Fill="Blue" Stroke="Red" StrokeThickness="3" RadiusX="1000" RadiusY="5"/>
-                    <Ellipse Grid.Row="0" Grid.Column="1" Margin="5,3" Fill="Gray" Stroke="LightYellow" StrokeThickness="3">
+                    <Rectangle Grid.Row="0" Grid.Column="0" Margin="5,3,5,3" Fill="Blue" Stroke="Red" StrokeThickness="3" RadiusX="1000" RadiusY="5"/>
+                    <Ellipse Grid.Row="0" Grid.Column="1" Margin="5,3,5,3" Fill="Gray" Stroke="LightYellow" StrokeThickness="3" Grid.ColumnSpan="2">
                         <Ellipse.InputBindings>
                             <MouseBinding Command="{Binding CloseApplicationCommand}" MouseAction="LeftDoubleClick"/>
                         </Ellipse.InputBindings>
                     </Ellipse>
-                    <GridSplitter Grid.Column="0" Grid.Row="0" Grid.RowSpan="2" HorizontalAlignment="Right" Width="4"/>
+                    <GridSplitter Grid.Column="0" Grid.Row="0" Grid.RowSpan="2" Width="4"/>
                 </Grid>
             </TabItem>
             <TabItem Background="Bisque">
@@ -74,10 +76,18 @@
                     <StackPanel Orientation="Horizontal">
                         <!--<Image Source=""/>-->
                         <fa:ImageAwesome Icon="Solid_CaretLeft" Height="13" Margin="2,0,5,0" Foreground="Red"/>
-                        <TextBlock Text="Вкладка 2"/>
+                        <TextBlock Text="График"/>
                     </StackPanel>
                 </TabItem.Header>
-
+                <oxy:Plot>
+                    <oxy:Plot.Axes>
+                        <oxy:LinearAxis Position="Left"/>
+                        <oxy:LinearAxis Position="Bottom"/>
+                    </oxy:Plot.Axes>
+                    <oxy:LineSeries Color="Red" ItemsSource="{Binding TestDataPoints}}"
+                                    DataFieldX="XValue"
+                                    DataFieldY="YValue"/>
+                </oxy:Plot>
             </TabItem>
         </TabControl>
     </DockPanel>
