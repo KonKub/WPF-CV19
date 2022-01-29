@@ -7,35 +7,47 @@ using System.Text;
 using System.Windows;
 using System.Windows.Input;
 
+using System.Timers;
+//using OxyPlot;
+using OxyPlot.Series;
+
 namespace CV19.ViewModels
 {
     internal class MainWindowViewModel : ViewModel
     {
+        private LineSeries lineSeries;
+        public OxyPlot.PlotModel Plot { get; private set; }
+
+
         public MainWindowViewModel()
         {
             #region Команды
             CloseApplicationCommand = new LambdaCommand(OnCloseApplicationCommandExecuted, CanCloseApplicationCommandExecute);
             #endregion
 
-            var dp = new List<DataPoint>((int)(360/0.1));
+
+            Plot = new OxyPlot.PlotModel { Title = "Example 1" };
+            //this.MyModel.Series.Add(new FunctionSeries(Math.Cos, 0, 10, 0.1, "cos(x)"));
+            //this.MyModel.Series.Add(new FunctionSeries(Math.Sin, 0, 10, 0.1, "sin(x)"));
+
+            lineSeries = new LineSeries();
+            lineSeries.LineStyle = OxyPlot.LineStyle.Solid;
+            lineSeries.StrokeThickness = 2.0;
+            lineSeries.Color = OxyPlot.OxyColor.FromRgb(0, 0, 0);
+
+            Plot.Series.Add(lineSeries);
+
             for (var x = 0d; x <= 360; x = x + 0.1)
             {
                 var y = Math.Sin(x * Math.PI / 180);
-                dp.Add(new DataPoint { XValue = x, YValue = y });
+                lineSeries.Points.Add(new OxyPlot.DataPoint(x, y));
             }
-            TestDataPoints = dp;
-        }
 
-        #region IEnumerable<DataPoint> TestDataPoints Тестовые данные для построения графика
-        /// <summary> Тестовые данные для построения графика </summary>
-        private IEnumerable<DataPoint> _TestDataPoints;
-
-        public IEnumerable<DataPoint> TestDataPoints
-        {
-            get => _TestDataPoints;
-            set => Set(ref _TestDataPoints, value);
+            //Timer timer = new Timer(1000);
+            //timer.Elapsed += Timer_Elapsed;
+            //timer.Start();
+            //count = 0;
         }
-        #endregion
 
         #region string _title заголовок окна
         /// <summary> заголовок окна </summary>
@@ -71,5 +83,15 @@ namespace CV19.ViewModels
         #endregion
 
         #endregion
+
+
+        //private void Timer_Elapsed(object sender, ElapsedEventArgs e)
+        //{
+        //    lineSeries.Points.Add(new OxyPlot.DataPoint(count, Math.Pow(count, 2)));
+        //    this.MyModel.InvalidatePlot(true);
+
+        //    count++;
+        //}
+
     }
 }

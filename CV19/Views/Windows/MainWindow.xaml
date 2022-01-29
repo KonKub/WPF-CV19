@@ -79,15 +79,8 @@
                         <TextBlock Text="График"/>
                     </StackPanel>
                 </TabItem.Header>
-                <oxy:Plot>
-                    <oxy:Plot.Axes>
-                        <oxy:LinearAxis Position="Left"/>
-                        <oxy:LinearAxis Position="Bottom"/>
-                    </oxy:Plot.Axes>
-                    <oxy:LineSeries Color="Red" ItemsSource="{Binding TestDataPoints}}"
-                                    DataFieldX="XValue"
-                                    DataFieldY="YValue"/>
-                </oxy:Plot>
+                <!--<oxy:PlotView Model="{Binding TestDataPoints}" />-->
+                <oxy:PlotView Model="{Binding Plot}" />
             </TabItem>
         </TabControl>
     </DockPanel>
