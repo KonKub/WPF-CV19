@@ -7,10 +7,11 @@
         xmlns:oxy="http://oxyplot.org/wpf"
         xmlns:l="clr-namespace:CV19"
         xmlns:vm="clr-namespace:CV19.ViewModels"
+        xmlns:decanat="clr-namespace:CV19.Models.Decanat"
         xmlns:cmd="clr-namespace:CV19.Infrastructure.Commands.Base"
         
         Title="{Binding Path=Title}" 
-        Height="233" Width="652">
+        Height="395" Width="937">
     <Window.InputBindings>
         <KeyBinding Modifiers="Ctrl" Key="Q" Command="{Binding CloseApplicationCommand}"/>
     </Window.InputBindings>
@@ -81,6 +82,50 @@
                 </TabItem.Header>
                 <!--<oxy:PlotView Model="{Binding TestDataPoints}" />-->
                 <oxy:PlotView Model="{Binding Plot}" />
+            </TabItem>
+            <TabItem Header="Студенты">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <!--<ColumnDefinition Width="3*"/>
+                        <ColumnDefinition Width="7*"/>-->
+                        <ColumnDefinition Width="250"/>
+                        <ColumnDefinition/>
+                    </Grid.ColumnDefinitions>
+                    <GroupBox Grid.Column="0" Header="Группы">
+                        <ListBox ItemsSource="{Binding Groups}" SelectedIndex="0"
+                                 DisplayMemberPath="Name"
+                                 SelectedItem="{Binding SelectedGroup}"/>
+                    </GroupBox>
+                    <GroupBox Grid.Column="1" Header="{Binding SelectedGroup.Name, FallbackValue='Студенты', TargetNullValue='Нет группы'}">
+                        <DataGrid ItemsSource="{Binding SelectedGroup.Students}" 
+                                  AutoGenerateColumns="False" 
+                                  HorizontalGridLinesBrush="Green"
+                                  VerticalGridLinesBrush="Aquamarine"
+                                  AlternatingRowBackground="LightBlue">
+                            <DataGrid.Columns>
+                                <DataGridTextColumn Header="Фамилия" Binding="{Binding Surname}" IsReadOnly="True"/>
+                                <DataGridTextColumn Header="Имя" Binding="{Binding Name}" IsReadOnly="True"/>
+                                <DataGridTextColumn Header="О" Binding="{Binding Patronimic}" IsReadOnly="True"/>
+                                <DataGridTemplateColumn Header="ДР2" IsReadOnly="False">
+                                    <DataGridTemplateColumn.CellTemplate>
+                                        <DataTemplate DataType="decanat:Student">
+                                            <TextBlock Text="{Binding Birthday, StringFormat=dd.mm.yyyy}"/>
+                                        </DataTemplate>
+                                    </DataGridTemplateColumn.CellTemplate>
+                                    <DataGridTemplateColumn.CellEditingTemplate>
+                                        <DataTemplate DataType="decanat:Student">
+                                            <DatePicker SelectedDate="{Binding Birthday}"/>
+                                        </DataTemplate>
+                                    </DataGridTemplateColumn.CellEditingTemplate>
+                                </DataGridTemplateColumn>
+                                <!--<DataGridTextColumn Header="ДР" Binding="{Binding Birthday, StringFormat=dd.mm.yyyy}"/>-->
+                                <DataGridTextColumn Header="Рейтинг" Binding="{Binding Rating}" IsReadOnly="True"/>
+                                <!--<DataGridTextColumn Header="Группа" Binding="{Binding DataContext.SelectedGroup.Name, RelativeSource={RelativeSource AncestorType=DataGrid}}"/>-->
+                                <DataGridTextColumn Header="Описание" Binding="{Binding Description}" Width="*" IsReadOnly="False"/>
+                            </DataGrid.Columns>
+                        </DataGrid>
+                    </GroupBox>
+                </Grid>
             </TabItem>
         </TabControl>
     </DockPanel>

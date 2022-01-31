@@ -10,6 +10,9 @@ using System.Windows.Input;
 using System.Timers;
 //using OxyPlot;
 using OxyPlot.Series;
+using System.Collections.ObjectModel;
+using CV19.Models.Decanat;
+using System.Linq;
 
 namespace CV19.ViewModels
 {
@@ -47,17 +50,37 @@ namespace CV19.ViewModels
             //timer.Elapsed += Timer_Elapsed;
             //timer.Start();
             //count = 0;
+
+            var si = 1;
+            var students = Enumerable.Range(1, 10).Select(i => new Student
+            {
+                Name = $"Stud name {si}",
+                Surname = $"Surename {si}",
+                Patronimic = $"Patronimic {si++}",
+                Birthday = DateTime.Now,
+                Rating=0
+            });
+            
+            var groups = Enumerable.Range(1, 20).Select(i => new Group
+            {
+                Name = $"Группа {i}",
+                Students = new ObservableCollection<Student>(students)
+            });
+            Groups = new ObservableCollection<Group>(groups);
         }
+
+        public ObservableCollection<Group> Groups { get; }
+
+        #region Group _SelectedGroup выбранная группа
+        /// <summary> выбранная группа </summary>
+        private Group _SelectedGroup;
+        public Group SelectedGroup { get => _SelectedGroup; set => Set(ref _SelectedGroup, value); }
+        #endregion
 
         #region string _title заголовок окна
         /// <summary> заголовок окна </summary>
         private string _title = "asdakjdkljdfa";
-
-        public string Title
-        {
-            get => _title;
-            set => Set(ref _title, value);
-        }
+        public string Title { get => _title; set => Set(ref _title, value); }
         #endregion
 
         #region string _title статус программы
